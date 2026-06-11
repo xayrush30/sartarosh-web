@@ -38,9 +38,17 @@ def save_appointment(new_app):
 @app.route('/')
 def home():
     nav_items = load_navbar()
-    return render_template('index.html', navbar=nav_items)
+    appointments = load_appointments() # Hamma navbatlarni yuklaymiz
+    
+    # Vaqtlarni mijozga chiroyli formatda (masalan: 2026-06-01 22:00) ko'rsatish uchun ro'yxat tuzamiz
+    busy_times = []
+    for app_item in appointments:
+        # 'T' harfini o'chirib, chiroyli vaqt formatiga keltiramiz
+        formatted_time = app_item['time'].replace('T', ' ')
+        busy_times.append(formatted_time)
+        
+    return render_template('index.html', navbar=nav_items, busy_times=busy_times)
 
-@app.route('/book', methods=['POST'])
 def book_appointment():
     name = request.form.get('name')
     phone = request.form.get('phone')
