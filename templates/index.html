@@ -98,6 +98,22 @@
                 </div>
             </div>
         </section>
+                <!-- Band bo'lgan vaqtlar ro'yxati bo'limi -->
+        <section id="busy-schedule" style="padding: 60px 8%; text-align: center; background-color: #121212;">
+            <h2>Band bo'lgan vaqtlar</h2>
+            <p style="color: #aaa; margin-bottom: 20px;">Ushbu soatlar band, iltimos navbatga yozilishda boshqa vaqtni tanlang:</p>
+            <div class="busy-container">
+                {% if busy_times %}
+                    <ul class="busy-list">
+                        {% for time_item in busy_times %}
+                            <li><i class="fas fa-clock" style="color: #ff3333; margin-right: 10px;"></i> {{ time_item }} (Band)</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="color: #4BB543; font-weight: bold;"><i class="fas fa-check-circle"></i> Hozircha barcha vaqtlar bo'sh!</p>
+                {% endif %}
+            </div>
+        </section>
 
         <!-- Aloqa bo'limi -->
         <section id="contact">
