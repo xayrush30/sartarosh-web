@@ -1,0 +1,7 @@
+[
+    {"name": "Bosh sahifa", "link": "#home"},
+    {"name": "Xizmatlar", "link": "#services"},
+    {"name":"Narxlar","link":"prices"},
+    {"name": "Biz haqimizda", "link": "#about"},
+    {"name": "Aloqa", "link": "#contact"}
+]
