@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sartaroshxona Mini Web Sahifasi</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v=3.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v=4.0">
     <!-- Ikonkalar uchun FontAwesome kutubxonasi -->
     <link rel="stylesheet" href="https://cloudflare.com">
 </head>
@@ -138,7 +138,7 @@
         <p>&copy; 2026 Sartarosh-Web. Barcha huquqlar himoyalangan.</p>
     </footer>
 
-    <!-- NAVBATGA YOZILISH MODAL OYNASI (Struktura To'liq To'g'rilandi) -->
+    <!-- NAVBATGA YOZILISH MODAL OYNASI -->
     <div id="booking-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -162,7 +162,7 @@
                         <option value="Klassik soch kesish">Klassik soch kesish (50 000 so'm)</option>
                         <option value="Zamonaviy uslub (Fade)">Zamonaviy uslub (Fade) (70 000 so'm)</option>
                         <option value="Soqol dizayni">Soqol dizayni (40 000 so'm)</option>
-                        <option value="Kombinatsiya (Soch + Soqol)">(Soch + Soqol) (100 000 so'm)</option>
+                        <option value="Kombinatsiya (Soch + Soqol)">Kombinatsiya (Soch + Soqol) (100 000 so'm)</option>
                         <option value="Bolalar soch turmagi">Bolalar soch turmagi (35 000 so'm)</option>
                     </select>
                 </div>
@@ -175,9 +175,14 @@
                 <div class="form-group">
                     <label>Bo'sh soatni tanlang:</label>
                     <div id="slots-container" class="slots-grid">
-                        <!-- Soatlar JS orqali keladi -->
+                        <!-- Soatlar JS orqali chiqadi -->
                     </div>
-                    <input type="hidden" id="booking-time" name="time" required>
+                    
+                    <!-- XATOLIK BERUVCHI INPUT TUZATILDI: Endi u yashirin emas, lekin mutloq ko'rinmas matnli maydon -->
+                    <input type="text" id="booking-time" name="time" required style="display: block; width: 1px; height: 1px; opacity: 0; padding: 0; border: none; margin: 0; position: absolute;">
+                    
+                    <!-- Mijoz tanlagan vaqtni vizual tasdiqlash uchun kichik yozuv -->
+                    <p id="selected-time-text" style="color: #ffcc00; margin-top: 10px; font-weight: bold; font-size: 14px; text-align: left;"></p>
                 </div>
 
                 <button type="submit" class="submit-btn">Yuborish</button>
