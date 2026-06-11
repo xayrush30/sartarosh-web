@@ -45,12 +45,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     btn.classList.add('disabled');
                 } else {
                     // Bo'sh soat bo'lsa, bosish funksiyasini qo'shamiz
-                    btn.addEventListener('click', () => {
-                        // Barcha tugmalardan 'selected' klassini olib tashlaymiz
-                        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
-                        
-                        // Faqat bosilgan tugmaga 'selected' klassini qo'shamiz
-                        btn.classList.add('selected');
+               btn.addEventListener('click', () => {
+    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    hiddenTimeInput.value = `${selectedDate}T${hour}`;
+    // Yangi vizual tasdiq matni:
+    document.getElementById('selected-time-text').innerText = `Tanlangan vaqt: ${selectedDate} soat ${hour}`;
+});
+
                         
                         // Python (Backend) taniygan formatda yashirin inputga yozamiz (YYYY-MM-DDTHH:MM)
                         hiddenTimeInput.value = `${selectedDate}T${hour}`;
