@@ -419,4 +419,45 @@ footer {
 .busy-list li:last-child {
     border-bottom: none;
 }
+/* Soat tugmachalari uchun setka (Grid) */
+.slots-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Oddiy bo'sh soat tugmasi */
+.slot-btn {
+    background-color: #2b2b2b;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.slot-btn:hover {
+    border-color: #ffcc00;
+    color: #ffcc00;
+}
+
+/* Tanlangan soat tugmasi */
+.slot-btn.selected {
+    background-color: #ffcc00 !important;
+    color: #000 !important;
+    border-color: #ffcc00 !important;
+}
+
+/* Band bo'lgan soat tugmasi */
+.slot-btn.disabled {
+    background-color: #331a1a !important;
+    color: #ff6666 !important;
+    border-color: #552222 !important;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
 
