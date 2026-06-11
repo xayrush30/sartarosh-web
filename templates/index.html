@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sartaroshxona Mini Web Sahifasi</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v=2.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v=3.0">
     <!-- Ikonkalar uchun FontAwesome kutubxonasi -->
     <link rel="stylesheet" href="https://cloudflare.com">
 </head>
@@ -98,7 +98,8 @@
                 </div>
             </div>
         </section>
-                <!-- Band bo'lgan vaqtlar ro'yxati bo'limi -->
+
+        <!-- Band bo'lgan vaqtlar ro'yxati bo'limi -->
         <section id="busy-schedule" style="padding: 60px 8%; text-align: center; background-color: #121212;">
             <h2>Band bo'lgan vaqtlar</h2>
             <p style="color: #aaa; margin-bottom: 20px;">Ushbu soatlar band, iltimos navbatga yozilishda boshqa vaqtni tanlang:</p>
@@ -136,25 +137,53 @@
     <footer>
         <p>&copy; 2026 Sartarosh-Web. Barcha huquqlar himoyalangan.</p>
     </footer>
+
+    <!-- NAVBATGA YOZILISH MODAL OYNASI (Struktura To'liq To'g'rilandi) -->
+    <div id="booking-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Navbatga yozilish</h2>
+            
+            <form id="booking-form" action="/book" method="POST">
+                <div class="form-group">
+                    <label for="client-name">Ismingiz:</label>
+                    <input type="text" id="client-name" name="name" placeholder="Ismingizni kiriting" required>
+                </div>
                 
-                <!-- YANGI: Faqat kunni tanlash -->
+                <div class="form-group">
+                    <label for="client-phone">Telefon raqamingiz:</label>
+                    <input type="tel" id="client-phone" name="phone" placeholder="+998 90 123 45 67" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="service-type">Xizmat turini tanlang:</label>
+                    <select id="service-type" name="service" required>
+                        <option value="" disabled selected>Xizmatni tanlang...</option>
+                        <option value="Klassik soch kesish">Klassik soch kesish (50 000 so'm)</option>
+                        <option value="Zamonaviy uslub (Fade)">Zamonaviy uslub (Fade) (70 000 so'm)</option>
+                        <option value="Soqol dizayni">Soqol dizayni (40 000 so'm)</option>
+                        <option value="Kombinatsiya (Soch + Soqol)">(Soch + Soqol) (100 000 so'm)</option>
+                        <option value="Bolalar soch turmagi">Bolalar soch turmagi (35 000 so'm)</option>
+                    </select>
+                </div>
+                
                 <div class="form-group">
                     <label for="booking-date">Kunni tanlang:</label>
                     <input type="date" id="booking-date" name="date" required>
                 </div>
 
-                <!-- YANGI: Tayyor soat tugmachalari joylashadigan blok -->
                 <div class="form-group">
                     <label>Bo'sh soatni tanlang:</label>
                     <div id="slots-container" class="slots-grid">
-                        <!-- Soatlar JavaScript orqali dinamik yuklanadi -->
+                        <!-- Soatlar JS orqali keladi -->
                     </div>
-                    <!-- Yashirin input (Tanlangan to'liq vaqtni Python-ga yuborish uchun) -->
                     <input type="hidden" id="booking-time" name="time" required>
                 </div>
 
                 <button type="submit" class="submit-btn">Yuborish</button>
             </form>
+        </div>
+    </div>
 
     <!-- JavaScript faylini ulash -->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
