@@ -9,6 +9,18 @@
     <link rel="stylesheet" href="https://cloudflare.com">
 </head>
 <body>
+    <!-- Flask orqali keladigan bildirishnomalar (Vaqt band yoki bo'shligi haqida) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert-message {{ category }}" style="padding: 15px; text-align: center; font-weight: bold; font-size: 16px; position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 3000; border-radius: 5px; width: 80%; max-width: 500px; 
+                    {% if category == 'error' %} background-color: #ff3333; color: white; {% else %} background-color: #4BB543; color: white; {% endif %}">
+                    {{ message }}
+                    <span style="float: right; cursor: pointer;" onclick="this.parentElement.style.display='none';">&times;</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <!-- Navigatsiya paneli -->
     <header>
