@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import json
 import requests
+import os
 
 app = Flask(__name__)
+app.secret_key = "sartarosh_maxfiy_kaliti" # Xatolik xabarlarini (flash) ko'rsatish uchun kerak
 
 # --- TELEGRAM SOZLAMALARI ---
-BOT_TOKEN = "8886573327:AAE1RBqpKU_6l86GeFAQzXPZyTnlrAotDwc"
-CHAT_ID = "5829769562"
+BOT_TOKEN = "8886573327:AAE1RBqpKU_6l86GeFAQzXPZyTnlrAotDwc" # O'zingizning tokenni qo'ying
+CHAT_ID = "5829769562" # O'zingizning IDingizni qo'ying
 
-# Navigatsiya menyusi uchun JSON ma'lumotlarini o'qish
+# Navigatsiya menyusini o'qish
 def load_navbar():
     try:
         with open('navbarlar.json', 'r', encoding='utf-8') as f:
@@ -16,50 +18,71 @@ def load_navbar():
     except FileNotFoundError:
         return []
 
+# Navbatlarni JSON fayldan yuklash
+def load_appointments():
+    if not os.path.exists('navbatlar_baza.json'):
+        return []
+    try:
+        with open('navbatlar_baza.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except:
+        return []
+
+# Yangi navbatni saqlash
+def save_appointment(new_app):
+    appointments = load_appointments()
+    appointments.append(new_app)
+    with open('navbatlar_baza.json', 'w', encoding='utf-8') as f:
+        json.dump(appointments, f, ensure_ascii=False, indent=4)
+
 @app.route('/')
 def home():
     nav_items = load_navbar()
     return render_template('index.html', navbar=nav_items)
-# Mijoz yuborgan ariza (navbat) ma'lumotlarini qabul qilish
+
 @app.route('/book', methods=['POST'])
 def book_appointment():
     name = request.form.get('name')
     phone = request.form.get('phone')
     service = request.form.get('service')
-    time = request.form.get('time')
+    time = request.form.get('time') # Format: '2026-06-01T22:00'
     
-    # 1. Ma'lumotlarni faylga yozish
-    appointment_data = f"Mijoz: {name} | Tel: {phone} | Xizmat:{service}|Vaqt: {time}\n"
-    with open('navbatlar.txt', 'a', encoding='utf-8') as f:
-        f.write(appointment_data)
+    # --- VAQTNI TEKSHIRISH (ENG MUHIM JOYI) ---
+    existing_appointments = load_appointments()
+    for app_item in existing_appointments:
+        if app_item['time'] == time:
+            # Agar bu vaqt bazada allaqachon bo'lsa, xabar beramiz va to'xtatamiz
+            flash("Kechirasiz, siz tanlagan vaqt allaqachon band! Iltimos, boshqa vaqtni tanlang.", "error")
+            return redirect(url_for('home'))
+            
+    # Agar vaqt bo'sh bo'lsa, davom etamiz
+    new_booking = {
+        "name": name,
+        "phone": phone,
+        "service": service,
+        "time": time
+    }
+    save_appointment(new_booking)
         
-    # 2. Telegram bot orqali xabar yuborish (Xavfsiz HTML formatida)
+    # Telegram bot xabari
     telegram_msg = (
         "YANGI NAVBAT PAYDO BO'LDI!\n\n"
         f"Mijoz: {name}\n"
         f"Telefon: {phone}\n"
         f"Xizmat: {service}\n"
-        f"Vaqt: {time}"
+        f"Vaqt: {time.replace('T', ' ')}"
     )
     
-    
-    # Telegram API-ga so'rov yuborish
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": CHAT_ID,
-        "text": telegram_msg,
-        "parse_mode": "HTML" # Markdown o'rniga HTML ishlatamiz
-    }
+    url = f"https://telegram.org{BOT_TOKEN}/sendMessage"
+    payload = {"chat_id": CHAT_ID, "text": telegram_msg}
     
     try:
-        response = requests.post(url, json=payload)
-        # Terminalda Telegram javobini tekshirish uchun:
-        print("Telegram API javobi:", response.status_code, response.text)
+        requests.post(url, json=payload)
+        flash("Arizangiz muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.", "success")
     except Exception as e:
-        print("Telegramga yuborishda ulanish xatoligi:", e)
+        print("Telegram xatoligi:", e)
         
     return redirect(url_for('home'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)
