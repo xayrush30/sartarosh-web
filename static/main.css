@@ -460,4 +460,34 @@ footer {
     cursor: not-allowed;
     opacity: 0.6;
 }
+/* Modal tarkibini kengaytirish va tugmani ko'rinadigan qilish */
+.modal-content {
+    margin: 3% auto !important; /* Tepadan masofani kamaytiramiz, shunda oyna tepaga ko'tariladi */
+    max-height: 90vh !important; /* Oynaning maksimal balandligini ekran o'lchamiga moslaymiz */
+    overflow-y: auto !important; /* Agar sig'may qolsa, ichida skroll (surish) paydo bo'ladi */
+    padding: 20px 30px !important; /* Ichki bo'shliqlarni ixchamlashtiramiz */
+}
+
+/* Forma elementlari orasidagi masofani qisqartirish */
+.form-group {
+    margin-bottom: 12px !important; 
+}
+
+/* Soat tugmachalari maydonini biroz ixchamroq qilish */
+.slots-grid {
+    gap: 8px !important;
+}
+
+.slot-btn {
+    padding: 8px !important; /* Tugmalarni biroz kichraytiramiz */
+    font-size: 14px !important;
+}
+
+/* Yuborish tugmasining dizayni va uning aniq ajralib turishi */
+.submit-btn {
+    margin-top: 15px !important;
+    display: block !important;
+    width: 100% !important;
+    visibility: visible !important; /* Majburiy ko'rinadigan qilamiz */
+}
 
