@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Kirish</title>
+    <style>
+        body { font-family: sans-serif; background-color: #121212; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background-color: #1e1e1e; padding: 40px; border-radius: 10px; border: 1px solid #ffcc00; width: 100%; max-width: 350px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        h2 { color: #ffcc00; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; color: #ccc; font-size: 14px; }
+        input { width: 100%; padding: 12px; background-color: #2b2b2b; border: 1px solid #444; color: #fff; border-radius: 5px; box-sizing: border-box; }
+        input:focus { border-color: #ffcc00; outline: none; }
+        .login-btn { width: 100%; background-color: #ffcc00; color: #000; border: none; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .login-btn:hover { background-color: #e6b800; }
+        .error-msg { background-color: #ff3333; color: white; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>Admin Tizimiga Kirish</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="error-msg">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="/admin-login" method="POST">
+            <div class="form-group">
+                <label>Login:</label>
+                <input type="text" name="username" required placeholder="Loginni kiriting">
+            </div>
+            <div class="form-group">
+                <label>Parol:</label>
+                <input type="password" name="password" required placeholder="Parolni kiriting">
+            </div>
+            <button type="submit" class="login-btn">Kirish</button>
+        </form>
+    </div>
+</body>
+</html>

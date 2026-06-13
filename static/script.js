@@ -3,85 +3,113 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookBtn = document.getElementById('book-btn');
     const closeBtn = document.querySelector('.close-btn');
     const dateInput = document.getElementById('booking-date');
+    const barberSelect = document.getElementById('barber-select');
     const slotsContainer = document.getElementById('slots-container');
     const hiddenTimeInput = document.getElementById('booking-time');
+    const timeText = document.getElementById('selected-time-text');
+    const bookingForm = document.getElementById('booking-form');
 
-    // Ish vaqtlari ro'yxati
-    const workingHours = [
-        "09:00", "10:00", "11:00", "12:00", "13:00", 
-        "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"
-    ];
+    const workingHours = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
 
-    // Sahifa pastidagi band vaqtlarni yig'ib olish
-    function getBusyTimes() {
+    function getBusySlots() {
         const busyElements = document.querySelectorAll('.busy-list li');
-        let busyTimes = [];
+        let busyList = [];
         busyElements.forEach(el => {
-            let text = el.innerText.replace('(Band)', '').trim();
-            busyTimes.push(text);
+            let cleanText = el.innerText.replace('(Band)', '').trim();
+            let parts = cleanText.split(' - ');
+            if (parts.length === 2) {
+                busyList.push({ barber: parts[0].trim(), datetime: parts[1].trim() });
+            }
         });
-        return busyTimes;
+        return busyList;
     }
 
-    // Kun tanlanganda soat tugmachalarini generatsiya qilish
-    if (dateInput) {
-        dateInput.addEventListener('change', () => {
-            const selectedDate = dateInput.value; // Format: YYYY-MM-DD
-            slotsContainer.innerHTML = ''; // Eski tugmalarni tozalash
-            hiddenTimeInput.value = ''; // Yashirin inputni tozalash
-            
-            const busyTimes = getBusyTimes();
+    function generateTimeSlots() {
+        if (!dateInput.value || !barberSelect.value) {
+            slotsContainer.innerHTML = '<p style="color: #aaa; font-size:13px; grid-column: span 4; text-align:center;">Iltimos, oldin usta va kunni tanlang.</p>';
+            return;
+        }
 
-            workingHours.forEach(hour => {
-                const fullTimeToCheck = `${selectedDate} ${hour}`;
-                
-                // Yangi tugma yaratamiz
-                const btn = document.createElement('div');
-                btn.className = 'slot-btn';
-                btn.innerText = hour;
+        const selectedDate = dateInput.value;
+        const selectedBarber = barberSelect.value;
+        slotsContainer.innerHTML = '';
+        hiddenTimeInput.value = '';
+        if (timeText) timeText.innerText = '';
 
-                // Agar vaqt band bo'lsa, uni bloklaymiz
-                if (busyTimes.includes(fullTimeToCheck)) {
-                    btn.classList.add('disabled');
-                } else {
-                    // Bo'sh soat bo'lsa, bosish funksiyasini qo'shamiz
-               btn.addEventListener('click', () => {
-    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    hiddenTimeInput.value = `${selectedDate}T${hour}`;
-    // Yangi vizual tasdiq matni:
-    document.getElementById('selected-time-text').innerText = `Tanlangan vaqt: ${selectedDate} soat ${hour}`;
-});
+        const busySlots = getBusySlots();
+        const now = new Date();
+        
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const currentDateString = `${year}-${month}-${day}`;
+        
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
 
-                        
-                        // Python (Backend) taniygan formatda yashirin inputga yozamiz (YYYY-MM-DDTHH:MM)
-                        hiddenTimeInput.value = `${selectedDate}T${hour}`;
-                        console.log("Tanlangan to'liq vaqt:", hiddenTimeInput.value);
-                    });
+        workingHours.forEach(hourStr => {
+            const fullTimeToCheck = `${selectedDate} ${hourStr}`;
+            const [h, m] = hourStr.split(':').map(Number);
+
+            const btn = document.createElement('div');
+            btn.className = 'slot-btn';
+            btn.innerText = hourStr;
+
+            const isReserved = busySlots.some(slot => slot.barber === selectedBarber && slot.datetime === fullTimeToCheck);
+
+            let isPastTime = false;
+            if (selectedDate === currentDateString) {
+                if (h < currentHour || (h === currentHour && m <= currentMinute)) {
+                    isPastTime = true;
                 }
-                slotsContainer.appendChild(btn);
-            });
-        });
+            }
 
-        // Bugungi kundan oldingi kunlarni tanlab bo'lmaydigan qilish
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.setAttribute('min', today);
+            if (isReserved || isPastTime) {
+                btn.classList.add('disabled');
+            } else {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    hiddenTimeInput.value = `${selectedDate}T${hourStr}`;
+                    if (timeText) {
+                        timeText.innerText = `Tanlandi: ${selectedBarber}, Soat: ${hourStr}`;
+                    }
+                });
+            }
+            slotsContainer.appendChild(btn);
+        });
     }
 
-    // Modal oynani ochish va yopish mantiqi
+    if (dateInput) dateInput.addEventListener('change', generateTimeSlots);
+    if (barberSelect) barberSelect.addEventListener('change', generateTimeSlots);
+
+    if (dateInput) {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        dateInput.setAttribute('min', `${year}-${month}-${day}`);
+    }
+
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', (e) => {
+            if (!hiddenTimeInput.value) {
+                e.preventDefault();
+                alert('Iltimos, navbat soatini tanlang!');
+            }
+        });
+    }
+
     if (bookBtn && modal) {
         bookBtn.onclick = function() { 
-            modal.style.setProperty('display', 'block', 'important'); 
+            modal.style.display = 'block'; 
+            generateTimeSlots(); 
         };
     }
     if (closeBtn && modal) {
-        closeBtn.onclick = function() { 
-            modal.style.setProperty('display', 'none', 'important'); 
-        };
+        closeBtn.onclick = function() { modal.style.display = 'none'; };
     }
     window.onclick = function(event) {
-        if (event.target == modal) { 
-            modal.style.setProperty('display', 'none', 'important'); 
-        }
+        if (event.target == modal) { modal.style.display = 'none'; }
     };
 });

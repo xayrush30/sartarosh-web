@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Sartaroshxona Admin Paneli</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #121212; color: #fff; padding: 40px; }
+        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        h1 { color: #ffcc00; margin: 0; }
+        table { width: 100%; border-collapse: collapse; background-color: #1e1e1e; }
+        th, td { border: 1px solid #444; padding: 12px; text-align: left; }
+        th { background-color: #ffcc00; color: #000; }
+        tr:nth-child(even) { background-color: #262626; }
+        .delete-btn { background-color: #ff3333; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; text-decoration: none; font-size: 13px; font-weight: bold; }
+        .delete-btn:hover { background-color: #cc0000; }
+        .logout-btn { background-color: #444; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; }
+        .logout-btn:hover { background-color: #555; }
+        .back-btn { display: inline-block; margin-top: 20px; color: #ffcc00; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header-area">
+        <h1>Sartaroshxona Arizalar Ro'yxati (SQL)</h1>
+        <a href="/admin-logout" class="logout-btn">Chiqish (Logout)</a>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Mijoz Ismi</th>
+                <th>Telefon Raqami</th>
+                <th>Xizmat Turi</th>
+                <th>Tanlangan Usta</th> <!-- Yangi ustun -->
+                <th>Belgilangan Vaqt</th>
+                <th>Harakat</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in appointments %}
+            <tr>
+                <td>{{ app.id }}</td>
+                <td>{{ app.name }}</td>
+                <td>{{ app.phone }}</td>
+                <td>{{ app.service }}</td>
+                <td>{{ app.barber }}</td> <!-- Sartarosh nomi -->
+                <td>{{ app.time }}</td>
+                <td><a href="/delete-appointment/{{ app.id }}" class="delete-btn" onclick="return confirm('Haqiqatdan ham ushbu navbatni o‘chirmoqchimisiz?')">O‘chirish</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/" class="back-btn">← Bosh sahifaga qaytish</a>
+</body>
+</html>

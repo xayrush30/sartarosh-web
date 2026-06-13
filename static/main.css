@@ -1,493 +1,178 @@
-/* Umumiy uslublar */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    scroll-behavior: smooth;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; scroll-behavior: smooth; }
+body { background-color: #121212; color: #e0e0e0; }
+h2 { font-size: 28px; margin-bottom: 25px; color: #ffcc00; text-align: center; text-transform: uppercase; }
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 8%; background-color: #1a1a1a; border-bottom: 2px solid #ffcc00; position: sticky; top: 0; z-index: 1000; }
+header .logo { font-size: 22px; font-weight: bold; color: #ffcc00; }
+nav ul { display: flex; list-style: none; }
+nav ul li { margin-left: 20px; }
+nav ul li a { color: #fff; text-decoration: none; transition: 0.3s; }
+nav ul li a:hover { color: #ffcc00; }
+.hero { height: 60vh; display: flex; justify-content: center; align-items: center; text-align: center; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://unsplash.com') no-repeat center center/cover; }
+.hero h1 { font-size: 38px; color: #fff; margin-bottom: 10px; }
+#book-btn, .submit-btn { background-color: #ffcc00; color: #000; border: none; padding: 12px 30px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.3s; }
+#book-btn:hover, .submit-btn:hover { background-color: #e6b800; transform: scale(1.03); }
+#services, #prices, #busy-schedule, #contact { padding: 60px 8%; }
+.service-cards { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; }
+.card { background-color: #1e1e1e; padding: 30px 20px; border-radius: 8px; width: 280px; text-align: center; border: 1px solid #2a2a2a; }
+.service-icon { font-size: 35px; color: #ffcc00; margin-bottom: 15px; }
+.price-container { max-width: 600px; margin: 0 auto; }
+.price-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 18px; }
+.price-dots { flex-grow: 1; border-bottom: 2px dotted #444; margin: 0 10px; }
+.price-item strong { color: #ffcc00; }
+.busy-container { max-width: 450px; margin: 0 auto; background-color: #1e1e1e; padding: 15px; border-radius: 8px; border: 1px solid #333; }
+.busy-list { list-style: none; text-align: left; }
+.busy-list li { padding: 10px; border-bottom: 1px solid #2a2a2a; color: #ccc; }
+.contact-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+.social-links { display: flex; gap: 15px; }
+.social-btn { padding: 10px 20px; color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold; }
+.telegram { background-color: #0088cc; } .instagram { background-color: #e1306c; }
+footer { background-color: #111; padding: 15px; text-align: center; color: #555; font-size: 14px; }
 
-body {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-h2 {
-    font-size: 32px;
-    margin-bottom: 40px;
-    color: #ffcc00;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-/* Header va Navigatsiya */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 8%;
-    background-color: #1a1a1a;
-    border-bottom: 2px solid #ffcc00;
-    position: sticky;
+.modal {
+    display: none;
+    position: fixed;
     top: 0;
-    z-index: 1000;
-}
-
-header .logo {
-    font-size: 26px;
-    font-weight: bold;
-    color: #ffcc00;
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-}
-
-nav ul li {
-    margin-left: 30px;
-}
-
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-nav ul li a:hover {
-    color: #ffcc00;
-}
-
-/* Bosh sahifa (Hero) */
-.hero {
-    height: 70vh;
-    display: flex;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
     justify-content: center;
     align-items: center;
-    text-align: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('https://unsplash.com') no-repeat center center/cover;
-}
-
-.hero h1 {
-    font-size: 48px;
-    color: #fff;
-    margin-bottom: 15px;
-}
-
-.hero p {
-    font-size: 20px;
-    color: #ccc;
-    margin-bottom: 30px;
-}
-
-#book-btn {
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-    padding: 15px 35px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s, transform 0.2s;
-}
-
-#book-btn:hover {
-    background-color: #e6b800;
-    transform: scale(1.05);
-}
-
-/* Xizmatlar */
-#services {
-    padding: 80px 8%;
-    text-align: center;
-}
-
-.service-cards {
+    z-index: 2000;
+  }
+  
+  .modal.active {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 30px;
-}
-
-.card {
+  }
+  
+  .modal-content {
     background-color: #1e1e1e;
-    padding: 40px 25px;
-    border-radius: 10px;
-    border: 1px solid #2a2a2a;
-    width: 300px;
-    transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-    border-color: #ffcc00;
-}
-
-.service-icon {
-    font-size: 40px;
-    color: #ffcc00;
-    margin-bottom: 20px;
-}
-
-.card h3 {
-    margin-bottom: 15px;
-    color: #fff;
-}
-
-.card p {
-    font-size: 14px;
-    color: #aaa;
-    line-height: 1.6;
-}
-
-/* Narxlar */
-#prices {
-    background-color: #1a1a1a;
-    padding: 80px 8%;
-    text-align: center;
-}
-
-.price-container {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.price-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: bottom;
-    margin-bottom: 25px;
-    font-size: 18px;
-}
-
-.price-dots {
-    flex-grow: 1;
-    border-bottom: 2px dotted #444;
-    margin: 0 15px;
-    position: relative;
-    top: -5px;
-}
-
-.price-item strong {
-    color: #ffcc00;
-}
-
-/* Aloqa */
-#contact {
-    padding: 80px 8%;
-    text-align: center;
-}
-
-.contact-grid {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 40px;
-    margin-top: 20px;
-}
-
-.contact-info p {
-    font-size: 18px;
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.contact-info i {
-    color: #ffcc00;
-    margin-right: 10px;
-    width: 25px;
-}
-
-.social-links {
-    display: flex;
-    gap: 20px;
-}
-
-.social-btn {
-    display: inline-block;
-    padding: 12px 25px;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: opacity 0.3s;
-}
-
-.social-btn i {
-    margin-right: 8px;
-}
-
-.telegram { background-color: #0088cc; }
-.instagram { background-color: #e1306c; }
-
-.social-btn:hover {
-    opacity: 0.85;
-}
-
-/* Footer */
-footer {
-    background-color: #111;
-    padding: 20px;
-    text-align: center;
-    font-size: 14px;
-    color: #666;
-    border-top: 1px solid #222;
-}
-/* Modal (Oyna) to'liq ekran dizayni */
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 2000; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0, 0, 0, 0.8); /* Orqa fonni qoraytirish */
-    backdrop-filter: blur(5px); /* Orqa fonni xiralashtirish */
-}
-
-.modal-content {
-    background-color: #1e1e1e;
-    margin: 10% auto; 
     padding: 30px;
-    border: 1px solid #ffcc00;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 10px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    color: #fff;
-}
-
-.close-btn {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 15px;
-}
-
-.close-btn:hover {
-    color: #ffcc00;
-}
-
-/* Forma elementlari dizayni */
-.form-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #ccc;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    background-color: #2b2b2b;
-    border: 1px solid #444;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.form-group input:focus {
-    border-color: #ffcc00;
-    outline: none;
-}
-
-.submit-btn {
-    width: 100%;
-    background-color: #ffcc00;
-    color: #000;
-    border: none;
-    padding: 12px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.submit-btn:hover {
-    background-color: #e6b800;
-}
-.form-group select {
-    width: 100%;
-    padding: 12px;
-    background-color: #2b2b2b;
-    border: 1px solid #444;
-    color: #fff;
-    border-radius: 5px;
-    font-size: 16px;
-}
-.form-group select:focus {
-    border-color: #ffcc00;
-    outline: none;
-}
-.modal {
-    display: none; 
-    position: fixed; 
-    z-index: 2000; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0, 0, 0, 0.8) !important;
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background-color: #1e1e1e !important;
-    margin: 10% auto; 
-    padding: 30px;
-    border: 1px solid #ffcc00;
-    width: 90%;
-    max-width: 450px;
-    border-radius: 10px;
-    position: relative;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    color: #fff;
-}
-/* Modal uchun mutloq ustunlik beruvchi yakuniy dizayn */
-.modal {
-    display: none !important; 
-    position: fixed !important; 
-    z-index: 9999 !important; 
-    left: 0;
-    top: 0;
-    width: 100% !important; 
-    height: 100% !important; 
-    background-color: rgba(0, 0, 0, 0.85) !important;
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background-color: #1e1e1e !important;
-    margin: 8% auto !important; 
-    padding: 30px !important;
-    border: 1px solid #ffcc00 !important;
-    width: 90% !important;
-    max-width: 450px !important;
-    border-radius: 10px !important;
-    position: relative !important;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.7) !important;
-    color: #fff !important;
-}
-
-.form-group select {
-    width: 100% !important;
-    padding: 12px !important;
-    background-color: #2b2b2b !important;
-    border: 1px solid #444 !important;
-    color: #fff !important;
-    border-radius: 5px !important;
-    font-size: 16px !important;
-}
-/* Band vaqtlar ro'yxati dizayni */
-.busy-container {
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: #1e1e1e;
-    padding: 20px;
     border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
     border: 1px solid #333;
-}
-
-.busy-list {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-}
-
-.busy-list li {
-    padding: 12px 15px;
-    border-bottom: 1px solid #2a2a2a;
-    font-size: 16px;
-    color: #ddd;
-}
-
-.busy-list li:last-child {
-    border-bottom: none;
-}
-/* Soat tugmachalari uchun setka (Grid) */
-.slots-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-}
-
-/* Oddiy bo'sh soat tugmasi */
-.slot-btn {
-    background-color: #2b2b2b;
-    color: #fff;
-    border: 1px solid #444;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+  }
+  
+  .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+  .form-group label { margin-bottom: 5px; color: #ccc; }
+  .form-group input, .form-group select {
     padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #2a2a2a;
+    color: #fff;
+  }
+  
+  .slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  .modal-content {
+    background-color: #1e1e1e;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    border: 1px solid #333;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+  }
+  
+  .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+  .form-group label { margin-bottom: 5px; color: #ccc; }
+  .form-group input, .form-group select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #2a2a2a;
+    color: #fff;
+  }
+  
+  .slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .slot-btn {
+    padding: 8px;
     text-align: center;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s;
-}
+    font-size: 13px;
+  }
+  .slot-btn:hover { background-color: #3a3a3a; }
+  .slot-btn.selected { background-color: #ffcc00; color: #000; font-weight: bold; }
+  .slot-btn.disabled { background-color: #1a1a1a; color: #555; text-decoration: line-through; cursor: not-allowed; }
 
-.slot-btn:hover {
-    border-color: #ffcc00;
-    color: #ffcc00;
-}
-
-/* Tanlangan soat tugmasi */
-.slot-btn.selected {
-    background-color: #ffcc00 !important;
-    color: #000 !important;
-    border-color: #ffcc00 !important;
-}
-
-/* Band bo'lgan soat tugmasi */
-.slot-btn.disabled {
-    background-color: #331a1a !important;
-    color: #ff6666 !important;
-    border-color: #552222 !important;
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-/* Modal tarkibini kengaytirish va tugmani ko'rinadigan qilish */
-.modal-content {
-    margin: 3% auto !important; /* Tepadan masofani kamaytiramiz, shunda oyna tepaga ko'tariladi */
-    max-height: 90vh !important; /* Oynaning maksimal balandligini ekran o'lchamiga moslaymiz */
-    overflow-y: auto !important; /* Agar sig'may qolsa, ichida skroll (surish) paydo bo'ladi */
-    padding: 20px 30px !important; /* Ichki bo'shliqlarni ixchamlashtiramiz */
-}
-
-/* Forma elementlari orasidagi masofani qisqartirish */
-.form-group {
-    margin-bottom: 12px !important; 
-}
-
-/* Soat tugmachalari maydonini biroz ixchamroq qilish */
-.slots-grid {
-    gap: 8px !important;
-}
-
-.slot-btn {
-    padding: 8px !important; /* Tugmalarni biroz kichraytiramiz */
-    font-size: 14px !important;
-}
-
-/* Yuborish tugmasining dizayni va uning aniq ajralib turishi */
-.submit-btn {
-    margin-top: 15px !important;
-    display: block !important;
-    width: 100% !important;
-    visibility: visible !important; /* Majburiy ko'rinadigan qilamiz */
-}
-
+  .hero {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.75)),
+                url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=1920&q=80')
+                no-repeat center center/cover;
+  }
+  .hero {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    z-index: -2;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: -1;
+  }

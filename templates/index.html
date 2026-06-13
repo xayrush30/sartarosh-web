@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sartaroshxona Mini Web Sahifasi</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v=4.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}?v=10.0">
     <!-- Ikonkalar uchun FontAwesome kutubxonasi -->
     <link rel="stylesheet" href="https://cloudflare.com">
 </head>
 <body>
-    <!-- Flask orqali keladigan bildirishnomalar (Vaqt band yoki bo'shligi haqida) -->
+
+    <!-- Flask orqali keladigan bildirishnomalar -->
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-                <div class="alert-message {{ category }}" style="padding: 15px; text-align: center; font-weight: bold; font-size: 16px; position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 3000; border-radius: 5px; width: 80%; max-width: 500px; 
-                    {% if category == 'error' %} background-color: #ff3333; color: white; {% else %} background-color: #4BB543; color: white; {% endif %}">
+                <div class="alert-message {{ category }}" style="padding: 15px; text-align: center; font-weight: bold; font-size: 16px; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; border-radius: 5px; width: 80%; max-width: 500px; {% if category == 'error' %} background-color: #ff3333; color: white; {% else %} background-color: #4BB543; color: white; {% endif %}">
                     {{ message }}
-                    <span style="float: right; cursor: pointer;" onclick="this.parentElement.style.display='none';">&times;</span>
                 </div>
             {% endfor %}
         {% endif %}
@@ -36,34 +35,25 @@
 
     <!-- Asosiy qism -->
     <main>
-        <!-- Bosh sahifa (Hero) -->
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h1>Mukammal ko'rinish sizga mos uslubda</h1>
-                <p>Zamonaviy soch turmaklari va professional xizmat ko'rsatish.</p>
-                <button id="book-btn"><i class="far fa-calendar-check"></i> Navbatga yozilish</button>
-            </div>
-        </section>
+      <!-- Bosh sahifa (Hero) -->
+<section id="home" class="hero">
+  <video autoplay muted loop playsinline class="hero-video">
+      <source src="{{ url_for('static', filename='hero-video.mp4') }}" type="video/mp4">
+  </video>
+  <div class="hero-content">
+      <h1>Mukammal ko'rinish sizga mos uslubda</h1>
+      <p>Zamonaviy soch turmaklari va professional xizmat ko'rsatish.</p>
+      <button id="book-btn"><i class="far fa-calendar-check"></i> Navbatga yozilish</button>
+  </div>
+</section>
 
         <!-- Xizmatlar bo'limi -->
         <section id="services">
             <h2>Xizmatlarimiz</h2>
             <div class="service-cards">
-                <div class="card">
-                    <i class="fas fa-cut service-icon"></i>
-                    <h3>Soch kesish</h3>
-                    <p>Siz xohlagan uslubda va yuz tuzilishingizga mos dizayn.</p>
-                </div>
-                <div class="card">
-                    <i class="fas fa-user-ninja service-icon"></i>
-                    <h3>Soqol shakllantirish</h3>
-                    <p>Soqol parvarishi, modellashtirish va issiq sochiq xizmati.</p>
-                </div>
-                <div class="card">
-                    <i class="fas fa-spa service-icon"></i>
-                    <h3>Soch parvarishi</h3>
-                    <p>Maskalar, vitaminlar va soch to'kilishiga qarshi muolajalar.</p>
-                </div>
+                <div class="card"><i class="fas fa-cut service-icon"></i><h3>Soch kesish</h3><p>Professional dizayn.</p></div>
+                <div class="card"><i class="fas fa-user-ninja service-icon"></i><h3>Soqol dizayni</h3><p>Modellashtirish xizmati.</p></div>
+                <div class="card"><i class="fas fa-spa service-icon"></i><h3>Soch parvarishi</h3><p>Vitaminli muolajalar.</p></div>
             </div>
         </section>
 
@@ -71,38 +61,38 @@
         <section id="prices">
             <h2>Xizmatlar va Narxlar</h2>
             <div class="price-container">
-                <div class="price-item">
-                    <span>Klassik soch kesish</span>
-                    <span class="price-dots"></span>
-                    <strong>50 000 so'm</strong>
+                <div class="price-item"><span>Klassik soch kesish</span><span class="price-dots"></span><strong>50 000 so'm</strong></div>
+                <div class="price-item"><span>Zamonaviy uslub (Fade)</span><span class="price-dots"></span><strong>70 000 so'm</strong></div>
+                <div class="price-item"><span>Soqol dizayni</span><span class="price-dots"></span><strong>40 000 so'm</strong></div>
+                <div class="price-item"><span>Kombinatsiya (Soch + Soqol)</span><span class="price-dots"></span><strong>100 000 so'm</strong></div>
+            </div>
+        </section>
+
+        <!-- Tavsiyalar bo'limi -->
+        <section id="recommendations" style="background-color: #1a1a1a;">
+            <h2>Uslub va Parvarish Tavsiyalari</h2>
+            <div class="service-cards">
+                <div class="card" style="width: 320px; text-align: left;">
+                    <i class="fas fa-paint-brush service-icon" style="color: #ffcc00;"></i>
+                    <h3 style="margin-bottom: 10px; color: #ffcc00;">Soch Bo'yatish Sirlari</h3>
+                    <p style="font-size: 14px; color: #ccc; line-height: 1.5;">Agar sochingizni birinchi marta boyatmoqchi bo'lsangiz, tabiiy ranglarga yaqin tonlarni tanlang. Bo'yalgan sochni namlantiruvchi maxsus shampunlar bilan yuvish rang uzoq saqlanishini ta'minlaydi.</p>
                 </div>
-                <div class="price-item">
-                    <span>Zamonaviy uslub (Fade)</span>
-                    <span class="price-dots"></span>
-                    <strong>70 000 so'm</strong>
+                <div class="card" style="width: 320px; text-align: left;">
+                    <i class="fas fa-user-alt service-icon" style="color: #ffcc00;"></i>
+                    <h3 style="margin-bottom: 10px; color: #ffcc00;">Yuz Tuzilishiga Mos Uslub</h3>
+                    <p style="font-size: 14px; color: #ccc; line-height: 1.5;"><b>Dumaloq yuzlar</b> uchun tepa qismi balandroq va yonlari qisqa turmaklar mos keladi. <b>Kvadrat yuzlarga</b> esa yon qismlari biroz yumshoqroq o'lingan klassik uslublar mos keladi.</p>
                 </div>
-                <div class="price-item">
-                    <span>Soqol dizayni</span>
-                    <span class="price-dots"></span>
-                    <strong>40 000 so'm</strong>
-                </div>
-                <div class="price-item">
-                    <span>Kombinatsiya (Soch + Soqol)</span>
-                    <span class="price-dots"></span>
-                    <strong>100 000 so'm</strong>
-                </div>
-                <div class="price-item">
-                    <span>Bolalar soch turmagi</span>
-                    <span class="price-dots"></span>
-                    <strong>35 000 so'm</strong>
+                <div class="card" style="width: 320px; text-align: left;">
+                    <i class="fas fa-heartbeat service-icon" style="color: #ffcc00;"></i>
+                    <h3 style="margin-bottom: 10px; color: #ffcc00;">Soch To'kilishiga Qarshi</h3>
+                    <p style="font-size: 14px; color: #ccc; line-height: 1.5;">Soch to'kilishini kamaytirish uchun tarkibida biotin va vitamin E bo'lgan zardoblardan foydalaning. Haftada bosh terisini yengil uqalash qon aylanishini yaxshilaydi.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Band bo'lgan vaqtlar ro'yxati bo'limi -->
-        <section id="busy-schedule" style="padding: 60px 8%; text-align: center; background-color: #121212;">
+        <!-- Band bo'lgan vaqtlar ro'yxati -->
+        <section id="busy-schedule">
             <h2>Band bo'lgan vaqtlar</h2>
-            <p style="color: #aaa; margin-bottom: 20px;">Ushbu soatlar band, iltimos navbatga yozilishda boshqa vaqtni tanlang:</p>
             <div class="busy-container">
                 {% if busy_times %}
                     <ul class="busy-list">
@@ -123,11 +113,10 @@
                 <div class="contact-info">
                     <p><i class="fas fa-map-marker-alt"></i> Manzil: Toshkent shahar, Chilonzor tumani</p>
                     <p><i class="fas fa-phone-alt"></i> Telefon: +998 90 123 45 67</p>
-                    <p><i class="fas fa-clock"></i> Ish vaqti: 09:00 - 21:00 (Har kuni)</p>
                 </div>
                 <div class="social-links">
-                    <a href="#" class="social-btn telegram"><i class="fab fa-telegram-plane"></i> Telegram</a>
-                    <a href="#" class="social-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https:t.me/reyimbayevblog" target="_blank" class="social-btn telegram"><i class="fab fa-telegram-plane"></i> Telegram</a>
+                    <a href="https://www.instagram.com/hayrulla_reyimbayev?igsh=Nzk5MThkbzJyanl4" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
                 </div>
             </div>
         </section>
@@ -138,53 +127,48 @@
         <p>&copy; 2026 Sartarosh-Web. Barcha huquqlar himoyalangan.</p>
     </footer>
 
-    <!-- NAVBATGA YOZILISH MODAL OYNASI -->
+    <!-- NAVBATGA YOZILISH MODAL OYNASI (FAKAT SHU BLOK ICHIDA FORMA BO'LISHI SHART) -->
     <div id="booking-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2>Navbatga yozilish</h2>
-            
             <form id="booking-form" action="/book" method="POST">
                 <div class="form-group">
-                    <label for="client-name">Ismingiz:</label>
-                    <input type="text" id="client-name" name="name" placeholder="Ismingizni kiriting" required>
+                    <label>Ismingiz:</label>
+                    <input type="text" name="name" placeholder="Ismingizni kiriting" required>
                 </div>
-                
                 <div class="form-group">
-                    <label for="client-phone">Telefon raqamingiz:</label>
-                    <input type="tel" id="client-phone" name="phone" placeholder="+998 90 123 45 67" required>
+                    <label>Telefon raqamingiz:</label>
+                    <input type="tel" name="phone" placeholder="+998 90 123 45 67" required>
                 </div>
-                
                 <div class="form-group">
-                    <label for="service-type">Xizmat turini tanlang:</label>
-                    <select id="service-type" name="service" required>
+                    <label>Xizmat turi:</label>
+                    <select name="service" required>
                         <option value="" disabled selected>Xizmatni tanlang...</option>
                         <option value="Klassik soch kesish">Klassik soch kesish (50 000 so'm)</option>
                         <option value="Zamonaviy uslub (Fade)">Zamonaviy uslub (Fade) (70 000 so'm)</option>
                         <option value="Soqol dizayni">Soqol dizayni (40 000 so'm)</option>
-                        <option value="Kombinatsiya (Soch + Soqol)">Kombinatsiya (Soch + Soqol) (100 000 so'm)</option>
-                        <option value="Bolalar soch turmagi">Bolalar soch turmagi (35 000 so'm)</option>
                     </select>
                 </div>
-                
+                <div class="form-group">
+                    <label for="barber-select">Sartarosh (Usta) tanlang:</label>
+                    <select id="barber-select" name="barber" required>
+                        <option value="" disabled selected>Ustani tanlang...</option>
+                        <option value="Usta Ali">Usta Ali</option>
+                        <option value="Usta Vali">Usta Vali</option>
+                        <option value="Usta Samandar">Usta Samandar</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="booking-date">Kunni tanlang:</label>
-                    <input type="date" id="booking-date" name="date" required>
+                    <input type="date" id="booking-date" required>
                 </div>
-
                 <div class="form-group">
                     <label>Bo'sh soatni tanlang:</label>
-                    <div id="slots-container" class="slots-grid">
-                        <!-- Soatlar JS orqali chiqadi -->
-                    </div>
-                    
-                    <!-- XATOLIK BERUVCHI INPUT TUZATILDI: Endi u yashirin emas, lekin mutloq ko'rinmas matnli maydon -->
-                    <input type="text" id="booking-time" name="time" required style="display: block; width: 1px; height: 1px; opacity: 0; padding: 0; border: none; margin: 0; position: absolute;">
-                    
-                    <!-- Mijoz tanlagan vaqtni vizual tasdiqlash uchun kichik yozuv -->
-                    <p id="selected-time-text" style="color: #ffcc00; margin-top: 10px; font-weight: bold; font-size: 14px; text-align: left;"></p>
+                    <div id="slots-container" class="slots-grid"></div>
+                    <input type="hidden" id="booking-time" name="time">
+                    <p id="selected-time-text" style="color: #ffcc00; margin-top: 10px; font-weight: bold; font-size: 14px; text-align: center;"></p>
                 </div>
-
                 <button type="submit" class="submit-btn">Yuborish</button>
             </form>
         </div>
