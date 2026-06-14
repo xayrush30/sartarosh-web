@@ -176,3 +176,42 @@ footer { background-color: #111; padding: 15px; text-align: center; color: #555;
     background: rgba(0,0,0,0.6);
     z-index: -1;
   }
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        overflow-x: hidden;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px 0;
+        margin: 0;
+    }
+
+    nav ul li a {
+        font-size: 13px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .prices-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+}
