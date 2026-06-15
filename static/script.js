@@ -112,4 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.onclick = function(event) {
         if (event.target == modal) { modal.style.display = 'none'; }
     };
+    function toggleMenu() {
+    const nav = document.getElementById('main-nav');
+    nav.classList.toggle('active');
+}
 });
