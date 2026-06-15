@@ -22,16 +22,17 @@
     {% endwith %}
 
     <!-- Navigatsiya paneli -->
-    <header>
-        <div class="logo"><i class="fas fa-scissors"></i> Sartarosh-Web</div>
-        <nav>
-            <ul>
-                {% for item in navbar %}
-                    <li><a href="{{ item.link }}">{{ item.name }}</a></li>
-                {% endfor %}
-            </ul>
-        </nav>
-    </header>
+<header>
+    <div class="logo"><i class="fas fa-scissors"></i> Sartarosh-Web</div>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <nav id="main-nav">
+        <ul>
+            {% for item in navbar %}
+                <li><a href="{{ item.link }}" onclick="toggleMenu()">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+</header>
 
     <!-- Asosiy qism -->
     <main>
