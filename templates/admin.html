@@ -2,53 +2,305 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sartaroshxona Admin Paneli</title>
+
     <style>
-        body { font-family: Arial, sans-serif; background-color: #121212; color: #fff; padding: 40px; }
-        .header-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        h1 { color: #ffcc00; margin: 0; }
-        table { width: 100%; border-collapse: collapse; background-color: #1e1e1e; }
-        th, td { border: 1px solid #444; padding: 12px; text-align: left; }
-        th { background-color: #ffcc00; color: #000; }
-        tr:nth-child(even) { background-color: #262626; }
-        .delete-btn { background-color: #ff3333; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; text-decoration: none; font-size: 13px; font-weight: bold; }
-        .delete-btn:hover { background-color: #cc0000; }
-        .logout-btn { background-color: #444; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; }
-        .logout-btn:hover { background-color: #555; }
-        .back-btn { display: inline-block; margin-top: 20px; color: #ffcc00; text-decoration: none; font-weight: bold; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+            padding: 40px;
+            margin: 0;
+        }
+
+        /* STATISTIKA */
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #1e1e1e;
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+            padding: 20px;
+            width: 220px;
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .card h1 {
+            font-size: 40px;
+            margin: 0;
+        }
+
+        /* HEADER */
+        .header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .title {
+            color: #ffcc00;
+            margin: 0;
+        }
+
+        /* JADVAL */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1e1e1e;
+        }
+
+        th,
+        td {
+            border: 1px solid #444;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        tr:nth-child(even) {
+            background-color: #262626;
+        }
+
+        /* STATUS */
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .status-pending {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        .status-confirmed {
+            background-color: #2196f3;
+            color: white;
+        }
+
+        .status-completed {
+            background-color: #00a651;
+            color: white;
+        }
+
+        .status-cancelled {
+            background-color: #ff3333;
+            color: white;
+        }
+
+        /* DELETE */
+        .delete-btn {
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+
+        /* LOGOUT */
+        .logout-btn {
+            background-color: #444;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background-color: #555;
+        }
+
+        /* BACK */
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* TELEFONDA */
+        @media (max-width: 900px) {
+            body {
+                padding: 15px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .card {
+                width: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="header-area">
-        <h1>Sartaroshxona Arizalar Ro'yxati (SQL)</h1>
-        <a href="/admin-logout" class="logout-btn">Chiqish (Logout)</a>
+
+    <!-- STATISTIKA -->
+    <div class="stats">
+
+        <div class="card">
+            <h3>📅 Bugungi mijozlar</h3>
+            <h1>{{ today_count }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>📋 Jami navbatlar</h3>
+            <h1>{{ total_count }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>💈 Sartaroshlar</h3>
+            <h1>{{ barber_count }}</h1>
+        </div>
+
     </div>
+
+
+    <!-- HEADER -->
+    <div class="header-area">
+
+        <h1 class="title">
+            Sartaroshxona Arizalar Ro'yxati
+        </h1>
+
+        <a href="/admin-logout" class="logout-btn">
+            Chiqish (Logout)
+        </a>
+
+    </div>
+
+
+    <!-- NAVBATLAR JADVALI -->
     <table>
+
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Mijoz Ismi</th>
                 <th>Telefon Raqami</th>
                 <th>Xizmat Turi</th>
-                <th>Tanlangan Usta</th> <!-- Yangi ustun -->
+                <th>Tanlangan Usta</th>
                 <th>Belgilangan Vaqt</th>
+                <th>Status</th>
                 <th>Harakat</th>
             </tr>
         </thead>
+
         <tbody>
+
             {% for app in appointments %}
+
             <tr>
+
                 <td>{{ app.id }}</td>
+
                 <td>{{ app.name }}</td>
+
                 <td>{{ app.phone }}</td>
+
                 <td>{{ app.service }}</td>
-                <td>{{ app.barber }}</td> <!-- Sartarosh nomi -->
+
+                <td>{{ app.barber }}</td>
+
                 <td>{{ app.time }}</td>
-                <td><a href="/delete-appointment/{{ app.id }}" class="delete-btn" onclick="return confirm('Haqiqatdan ham ushbu navbatni o‘chirmoqchimisiz?')">O‘chirish</a></td>
+
+                <!-- STATUS -->
+                <td>
+
+                    {% if app.status == "Kutilmoqda" %}
+
+                        <span class="status status-pending">
+                            🟡 Kutilmoqda
+                        </span>
+
+                    {% elif app.status == "Tasdiqlandi" %}
+
+                        <span class="status status-confirmed">
+                            🔵 Tasdiqlandi
+                        </span>
+
+                    {% elif app.status == "Bajarildi" %}
+
+                        <span class="status status-completed">
+                            🟢 Bajarildi
+                        </span>
+
+                    {% elif app.status == "Bekor qilindi" %}
+
+                        <span class="status status-cancelled">
+                            🔴 Bekor qilindi
+                        </span>
+
+                    {% else %}
+
+                        <span class="status status-pending">
+                            🟡 {{ app.status }}
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+
+                <!-- HARAKAT -->
+                <td>
+
+                    <a
+                        href="/delete-appointment/{{ app.id }}"
+                        class="delete-btn"
+                        onclick="return confirm('Haqiqatan ham ushbu navbatni o‘chirmoqchimisiz?')"
+                    >
+                        O‘chirish
+                    </a>
+
+                </td>
+
             </tr>
+
             {% endfor %}
+
         </tbody>
+
     </table>
-    <a href="/" class="back-btn">← Bosh sahifaga qaytish</a>
+
+
+    <a href="/" class="back-btn">
+        ← Bosh sahifaga qaytish
+    </a>
+
 </body>
 </html>
